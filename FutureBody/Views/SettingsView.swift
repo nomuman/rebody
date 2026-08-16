@@ -62,8 +62,8 @@ struct SettingsView: View {
             }
 
             Section {
-                Link("プライバシーポリシー", destination: URL(string: "https://future-body-app-20260816.web.app/privacy.html")!)
-                Link("サポート", destination: URL(string: "https://future-body-app-20260816.web.app/support.html")!)
+                Link("プライバシーポリシー", destination: URL(string: "https://future-body-app-20260816.web.app/privacy")!)
+                Link("サポート", destination: URL(string: "https://future-body-app-20260816.web.app/support")!)
             } header: {
                 Text("ご案内")
             }

@@ -4,8 +4,8 @@
 
 - アプリ名：Re:Body
 - サブタイトル：魅力と能力を、2分から更新
-- プライバシーポリシー：https://future-body-app-20260816.web.app/privacy.html
-- サポート：https://future-body-app-20260816.web.app/support.html
+- プライバシーポリシー：https://future-body-app-20260816.web.app/privacy
+- サポート：https://future-body-app-20260816.web.app/support
 - マーケティングURL：https://future-body-app-20260816.web.app/
 - 主カテゴリ：ヘルスケア／フィットネス
 - 年齢制限：4+

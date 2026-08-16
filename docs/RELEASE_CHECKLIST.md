@@ -1,5 +1,10 @@
 # Re:Body リリースチェックリスト
 
+## 現在の状態
+
+- App Store ConnectへのBuild 2アップロード：完了
+- App Store Connectへの提出候補Build 4：アップロード完了、処理結果を確認中
+
 ## 完了済み
 
 - SwiftUIアプリ本体、アイコン、LINE Seed JPフォント
@@ -11,16 +16,17 @@
 - アプリ内のアカウント・データ削除
 - 痛みがある場合の休止導線と安全上の注意
 - 8件のユニットテスト
-- OUR ENGINEERING（W7WQFW7K74）向け開発アーカイブ
+- OUR ENGINEERING（W7WQFW7K74）向けStore署名とアップロード
 - App Store掲載文案と審査メモ
 - GitHub公開リポジトリの秘密情報スキャン
 
-## Apple側で一度だけ必要な作業
+## App Store Connectで必要な作業
 
-1. XcodeのSettings → Accountsで、OUR ENGINEERINGにアクセスできるApple Accountへログインする
-2. Manage CertificatesからApple Distribution証明書を追加する
-3. `app.futurebody.mobile`のTeamがOUR ENGINEERINGになっていることを確認する
-4. App Store Connectで、アプリ名、説明、キーワード、カテゴリ、年齢レーティング、プライバシー回答、スクリーンショットを登録する
+1. XcodeのSettings → Accountsで、OUR ENGINEERINGにアクセスできるApple Accountへログインする（完了）
+2. `app.futurebody.mobile`のTeamがOUR ENGINEERINGになっていることを確認する（完了）
+3. App Store Connectで、アプリ名、説明、キーワード、カテゴリ、年齢レーティング、プライバシー回答、スクリーンショットを登録する
+4. Build 4の処理が完了したら、TestFlightで内部テストを行う
+5. 審査情報を入力し、「審査に提出」を実行する
 
 ## IPA作成とアップロード
 
@@ -30,7 +36,13 @@
 Scripts/release_app_store.sh
 ```
 
-IPAだけを作る場合は、`ASC_API_KEY_ID`と`ASC_ISSUER_ID`を設定せずに実行します。App Store Connect APIキーを使ってアップロードする場合は、標準のAPIキー配置に秘密鍵を置き、次のように実行します。
+このスクリプトは、Xcodeに登録したApple Accountの自動署名を使ってアーカイブし、App Store Connectへ直接アップロードします。IPAだけを作る場合は、次のように実行します。
+
+```sh
+EXPORT_DESTINATION=export Scripts/release_app_store.sh
+```
+
+App Store Connect APIキーを使ってアップロードする場合は、標準のAPIキー配置に秘密鍵を置き、次のように実行します。
 
 ```sh
 ASC_API_KEY_ID=XXXX ASC_ISSUER_ID=XXXX Scripts/release_app_store.sh
