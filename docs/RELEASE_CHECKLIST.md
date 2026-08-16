@@ -2,8 +2,8 @@
 
 ## 現在の状態
 
-- App Store Connectへの提出候補Build 6：アップロード準備中
-- Build 6のApp Store Connect処理状態：画面で確認が必要
+- App Store Connectへの提出候補Build 6：アップロード完了
+- Build 6のApp Store Connect処理状態：処理待ち（App Store Connect画面で確認が必要）
 
 ## 完了済み
 
