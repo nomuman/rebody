@@ -8,7 +8,7 @@
 - サポート：https://future-body-app-20260816.web.app/support
 - マーケティングURL：https://future-body-app-20260816.web.app/
 - 主カテゴリ：ヘルスケア／フィットネス
-- 年齢制限：4+
+- 年齢制限：App Store Connectの質問票で該当なしを回答（4+想定、Made for Kidsではない）
 
 ## スクリーンショット素材
 

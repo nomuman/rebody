@@ -2,8 +2,8 @@
 
 ## 現在の状態
 
-- App Store Connectへの提出候補Build 5：アップロード完了
-- Build 5のApp Store Connect処理状態：画面で確認が必要
+- App Store Connectへの提出候補Build 6：アップロード準備中
+- Build 6のApp Store Connect処理状態：画面で確認が必要
 
 ## 完了済み
 
@@ -12,7 +12,7 @@
 - Firebase Authentication匿名ログインとFirestore同期
 - Firestore Rulesの公開
 - プライバシーポリシーとサポートページの公開
-- Privacy Manifestの追加
+- Privacy Manifestの追加（匿名アカウントに紐づく同期データを正確に申告）
 - アプリ内のアカウント・データ削除
 - 痛みがある場合の休止導線と安全上の注意
 - 8件のユニットテスト
@@ -25,8 +25,9 @@
 1. XcodeのSettings → Accountsで、OUR ENGINEERINGにアクセスできるApple Accountへログインする（完了）
 2. `app.futurebody.mobile`のTeamがOUR ENGINEERINGになっていることを確認する（完了）
 3. App Store Connectで、アプリ名、説明、キーワード、カテゴリ、年齢レーティング、プライバシー回答、スクリーンショットを登録する
-4. Build 5の処理が完了したら、TestFlightで内部テストを行う
-5. 審査情報を入力し、「審査に提出」を実行する
+4. App Informationで、規制対象医療機器を「いいえ」と回答し、DSAの質問が表示された場合は運営者情報に基づいて回答する
+5. Build 6の処理が完了したら、輸出コンプライアンスを確認してTestFlightで内部テストを行う
+6. 審査情報を入力し、「Add for Review」→「Submit for Review」を実行する
 
 ## IPA作成とアップロード
 
