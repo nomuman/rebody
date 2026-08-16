@@ -100,7 +100,15 @@ final class WorkoutStore: ObservableObject {
     }
 
     func deleteAllData() async throws {
-        if let firebaseSync {
+        if FirebaseApp.app() != nil {
+            if firebaseSync == nil {
+                await connectToFirebase()
+            }
+
+            guard let firebaseSync else {
+                throw FirebaseSyncError.notConfigured
+            }
+
             try await firebaseSync.deleteAccount()
         }
 

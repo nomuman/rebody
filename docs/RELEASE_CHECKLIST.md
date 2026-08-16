@@ -3,7 +3,7 @@
 ## 現在の状態
 
 - App Store ConnectへのBuild 2アップロード：完了
-- App Store Connectへの提出候補Build 4：アップロード完了、処理結果を確認中
+- App Store Connectへの提出候補Build 5：削除処理の修正後にアップロード予定
 
 ## 完了済み
 
@@ -25,7 +25,7 @@
 1. XcodeのSettings → Accountsで、OUR ENGINEERINGにアクセスできるApple Accountへログインする（完了）
 2. `app.futurebody.mobile`のTeamがOUR ENGINEERINGになっていることを確認する（完了）
 3. App Store Connectで、アプリ名、説明、キーワード、カテゴリ、年齢レーティング、プライバシー回答、スクリーンショットを登録する
-4. Build 4の処理が完了したら、TestFlightで内部テストを行う
+4. Build 5の処理が完了したら、TestFlightで内部テストを行う
 5. 審査情報を入力し、「審査に提出」を実行する
 
 ## IPA作成とアップロード

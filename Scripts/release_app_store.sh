@@ -31,6 +31,8 @@ cat > "$export_options" <<PLIST
 	<string>automatic</string>
 	<key>teamID</key>
 	<string>${team_id}</string>
+	<key>manageAppVersionAndBuildNumber</key>
+	<false/>
 	<key>uploadSymbols</key>
 	<true/>
 </dict>
