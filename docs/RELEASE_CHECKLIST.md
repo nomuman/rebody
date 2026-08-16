@@ -2,8 +2,8 @@
 
 ## 現在の状態
 
-- App Store ConnectへのBuild 2アップロード：完了
-- App Store Connectへの提出候補Build 5：アップロード完了、処理待ち
+- App Store Connectへの提出候補Build 5：アップロード完了
+- Build 5のApp Store Connect処理状態：画面で確認が必要
 
 ## 完了済み
 
@@ -30,7 +30,7 @@
 
 ## IPA作成とアップロード
 
-証明書が入った後、リポジトリのルートで次を実行します。
+再アップロードが必要になった場合は、リポジトリのルートで次を実行します。
 
 ```sh
 Scripts/release_app_store.sh
