@@ -3,7 +3,7 @@
 ## 現在の状態
 
 - App Store ConnectへのBuild 2アップロード：完了
-- App Store Connectへの提出候補Build 5：削除処理の修正後にアップロード予定
+- App Store Connectへの提出候補Build 5：アップロード完了、処理待ち
 
 ## 完了済み
 
