@@ -204,7 +204,7 @@ enum WorkoutCatalog {
 
     static func plan(for focus: FocusArea, type: SessionType) -> WorkoutPlan {
         WorkoutPlan(
-            id: "(focus.rawValue)-(type.rawValue)",
+            id: "\(focus.rawValue)-\(type.rawValue)",
             type: type,
             focus: focus,
             title: title(for: focus, type: type),

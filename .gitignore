@@ -3,6 +3,7 @@ DerivedData/
 build/
 .build/
 .swiftpm/
+.firebase/
 *.xcuserstate
 xcuserdata/
 *.moved-aside

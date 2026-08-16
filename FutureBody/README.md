@@ -18,6 +18,12 @@
 - 仲間機能の導線
 - Firebase Authentication / Firestoreへの匿名同期
 
+## Firebase設定
+
+Firebase設定ファイルは公開リポジトリに含めません。Firebase ConsoleからiOSアプリ用の`GoogleService-Info.plist`をダウンロードし、`FutureBody/GoogleService-Info.plist`に置いてください。ファイルがない場合もアプリは端末内保存で起動できます。
+
+本番ビルドでは、存在する設定ファイルをビルド時にアプリへコピーします。Firestore Rulesでユーザー自身の匿名アカウント以外からの読み書きを拒否しています。
+
 ## 次の段階
 
 - Core MLによる本人写真の未来画像
@@ -25,6 +31,10 @@
 - Sign in with Apple
 - 仲間機能の実装
 - 実験イベントのリモート収集
+
+## 安全に関する注意
+
+本アプリは医療行為や診断を行うものではありません。痛みがある場合、または運動中に痛みや強い違和感が出た場合は中止し、必要に応じて医療専門家へ相談してください。
 
 ## フォント
 

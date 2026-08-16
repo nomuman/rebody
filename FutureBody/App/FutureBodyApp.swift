@@ -6,7 +6,7 @@ struct FutureBodyApp: App {
     @StateObject private var store: WorkoutStore
 
     init() {
-        if FirebaseApp.app() == nil {
+        if FirebaseApp.app() == nil, FirebaseOptions.defaultOptions() != nil {
             FirebaseApp.configure()
         }
         _store = StateObject(wrappedValue: WorkoutStore())

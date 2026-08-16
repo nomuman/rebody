@@ -64,6 +64,22 @@ final class FirebaseWorkoutSync {
         try await save(record: record, under: userReference)
     }
 
+    func deleteAccount() async throws {
+        guard let userID else { return }
+
+        let userReference = database.collection("users").document(userID)
+        let records = try await userReference.collection("workoutRecords").getDocuments()
+        for record in records.documents {
+            try await record.reference.delete()
+        }
+        try await userReference.delete()
+
+        if let user = Auth.auth().currentUser {
+            try await user.delete()
+        }
+        self.userID = nil
+    }
+
     private func save(record: WorkoutRecord, under userReference: DocumentReference) async throws {
         try await userReference.collection("workoutRecords").document(record.id.uuidString).setData([
             "planID": record.planID,

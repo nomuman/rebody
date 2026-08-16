@@ -80,11 +80,18 @@ Dir.glob("FutureBody/Resources/*.xcprivacy").sort.each do |path|
   target.resources_build_phase.add_file_reference(file)
 end
 
-google_service_file = app_group.new_file("FutureBody/GoogleService-Info.plist")
-target.resources_build_phase.add_file_reference(google_service_file)
-
 asset_catalog = app_group.files.find { |file| file.path == "FutureBody/Assets.xcassets" }
 target.resources_build_phase.add_file_reference(asset_catalog)
+
+firebase_configuration_phase = target.new_shell_script_build_phase("Firebase configuration")
+firebase_configuration_phase.shell_script = <<~SH
+  if [ -f "${SRCROOT}/FutureBody/GoogleService-Info.plist" ]; then
+    cp "${SRCROOT}/FutureBody/GoogleService-Info.plist" "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleService-Info.plist"
+  fi
+SH
+firebase_configuration_phase.output_paths = [
+  "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist"
+]
 
 tests_group = project.main_group.new_group("FutureBodyTests")
 test_file = tests_group.new_file("FutureBodyTests/WorkoutStoreTests.swift")

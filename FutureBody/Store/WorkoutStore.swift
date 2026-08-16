@@ -99,6 +99,20 @@ final class WorkoutStore: ObservableObject {
         save()
     }
 
+    func deleteAllData() async throws {
+        if let firebaseSync {
+            try await firebaseSync.deleteAccount()
+        }
+
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["futurebody-evening-reminder"])
+        userDefaults.removeObject(forKey: persistenceKey)
+        dailyState = DailyState()
+        records = []
+        reminderEnabled = false
+        firebaseSync = nil
+        syncStatus = .localOnly
+    }
+
     private func scheduleReminder() async {
         let content = UNMutableNotificationContent()
         content.title = "今夜の一手"
@@ -151,6 +165,9 @@ final class WorkoutStore: ObservableObject {
     }
 
     private func syncState() async {
+        if firebaseSync == nil {
+            await connectToFirebase()
+        }
         guard let firebaseSync else { return }
         do {
             try await firebaseSync.save(state: dailyState, records: records)
@@ -161,6 +178,9 @@ final class WorkoutStore: ObservableObject {
     }
 
     private func syncRecord(_ record: WorkoutRecord) async {
+        if firebaseSync == nil {
+            await connectToFirebase()
+        }
         guard let firebaseSync else { return }
         do {
             try await firebaseSync.save(record: record)

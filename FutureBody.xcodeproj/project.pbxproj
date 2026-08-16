@@ -12,7 +12,6 @@
 		175A663F79CBDB72EDBB2E20 /* LINESeedJP-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0455972DDE59F396105DD929 /* LINESeedJP-ExtraBold.ttf */; };
 		27A8F088F58DA4315898A5AC /* FirebaseWorkoutSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E309F8689D1D63574F4193 /* FirebaseWorkoutSync.swift */; };
 		34E8F17F5A8B942D0EDDEAAE /* WorkoutStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F219AC7B5B867E92BDC63296 /* WorkoutStoreTests.swift */; };
-		58C4EE275F36CFB445CA5724 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC9A38817A2841E9572C02B4 /* GoogleService-Info.plist */; };
 		5918652CA834E248CC0F70F5 /* WorkoutStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505C546C2019DDE779B54634 /* WorkoutStore.swift */; };
 		59D1A6EC718880BDC96563D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABF7A12AEDF0BFFAB1E152 /* SettingsView.swift */; };
 		5A85C0344E1806C7AE0E72A4 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B7B3AA1DEC3D781C1C3ED2 /* TodayView.swift */; };
@@ -62,7 +61,6 @@
 		BBD653765F5B90C0DDDB38EF /* DailyStateSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DailyStateSheet.swift; path = FutureBody/Views/DailyStateSheet.swift; sourceTree = "<group>"; };
 		BC27CEBDFC58711006D9F759 /* LINESeedJP-Bold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = "LINESeedJP-Bold.ttf"; path = "FutureBody/Resources/Fonts/LINESeedJP-Bold.ttf"; sourceTree = "<group>"; };
 		CC4140DF9FCA23C34F2E906A /* ProgressViewScreen.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProgressViewScreen.swift; path = FutureBody/Views/ProgressViewScreen.swift; sourceTree = "<group>"; };
-		EC9A38817A2841E9572C02B4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "FutureBody/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F219AC7B5B867E92BDC63296 /* WorkoutStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WorkoutStoreTests.swift; path = FutureBodyTests/WorkoutStoreTests.swift; sourceTree = "<group>"; };
 		F304B215B811B9A9285152B0 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = FutureBody/Resources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FCB18BF6CC1FCACFB99AEB03 /* DesignSystem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DesignSystem.swift; path = FutureBody/App/DesignSystem.swift; sourceTree = "<group>"; };
@@ -153,7 +151,6 @@
 				0455972DDE59F396105DD929 /* LINESeedJP-ExtraBold.ttf */,
 				017DCBD03295049B19316BB2 /* LINESeedJP-Regular.ttf */,
 				F304B215B811B9A9285152B0 /* PrivacyInfo.xcprivacy */,
-				EC9A38817A2841E9572C02B4 /* GoogleService-Info.plist */,
 			);
 			name = FutureBody;
 			sourceTree = "<group>";
@@ -168,6 +165,7 @@
 				A30402B98445D55F4A24E2F2 /* Sources */,
 				0334D53940C0CBFF0BD692F8 /* Frameworks */,
 				C3FD042DEF71602324F8B256 /* Resources */,
+				9A1F4B8B2C1D4E5F8A7B6C0D /* Firebase configuration */,
 			);
 			buildRules = (
 			);
@@ -250,12 +248,27 @@
 				175A663F79CBDB72EDBB2E20 /* LINESeedJP-ExtraBold.ttf in Resources */,
 				669F0DBE1D2F4FDDC8C35221 /* LINESeedJP-Regular.ttf in Resources */,
 				0540DA9CB4DF9A1A759ABB61 /* PrivacyInfo.xcprivacy in Resources */,
-				58C4EE275F36CFB445CA5724 /* GoogleService-Info.plist in Resources */,
 				72E6575054E0243E70251347 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9A1F4B8B2C1D4E5F8A7B6C0D /* Firebase configuration */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "Firebase configuration";
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -f \"${SRCROOT}/FutureBody/GoogleService-Info.plist\" ]; then\n  cp \"${SRCROOT}/FutureBody/GoogleService-Info.plist\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleService-Info.plist\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A30402B98445D55F4A24E2F2 /* Sources */ = {

@@ -138,7 +138,7 @@ struct WorkoutPlayerView: View {
     private var progressHeader: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("種目 (currentIndex + 1) / (plan.exercises.count)")
+                Text("種目 \(currentIndex + 1) / \(plan.exercises.count)")
                     .font(AppFont.bold(14, relativeTo: .subheadline))
                 Spacer()
                 Text("違和感が出たら、やめて大丈夫")
