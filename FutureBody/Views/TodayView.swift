@@ -12,6 +12,7 @@ struct TodayView: View {
             VStack(alignment: .leading, spacing: 24) {
                 header
                 recommendationCard
+                coachCard
                 stateCard
                 weeklyCard
                 futureCard
@@ -21,6 +22,9 @@ struct TodayView: View {
         }
         .background(Color(uiColor: .systemBackground))
         .navigationTitle("今日")
+        .task {
+            await store.refreshCoachMessage()
+        }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -105,6 +109,35 @@ struct TodayView: View {
                 showingState = true
             }
             .buttonStyle(SecondaryButtonStyle())
+        }
+        .cardSurface()
+    }
+
+    private var coachCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Label(store.coachSource == .ai ? "AIコーチからのひとこと" : "今日のコーチ", systemImage: "sparkles")
+                    .font(AppFont.bold(16, relativeTo: .headline))
+                Spacer()
+                Button {
+                    Task {
+                        await store.refreshCoachMessage(force: true)
+                    }
+                } label: {
+                    Image(systemName: "arrow.clockwise")
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.secondary)
+                .accessibilityLabel("コーチのひとことを更新")
+            }
+
+            Text(store.coachMessage)
+                .font(AppFont.regular(15, relativeTo: .body))
+                .foregroundStyle(.primary)
+
+            Text(store.coachSource == .ai ? "今日の状態と最近の一歩をもとにしています" : "今日の状態から、すぐできる一歩を提案しています")
+                .font(AppFont.regular(12, relativeTo: .caption))
+                .foregroundStyle(.secondary)
         }
         .cardSurface()
     }

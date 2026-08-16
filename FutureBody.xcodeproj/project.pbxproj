@@ -11,6 +11,7 @@
 		0C1F0B2F45B09B37261B2363 /* ProgressViewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4140DF9FCA23C34F2E906A /* ProgressViewScreen.swift */; };
 		175A663F79CBDB72EDBB2E20 /* LINESeedJP-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0455972DDE59F396105DD929 /* LINESeedJP-ExtraBold.ttf */; };
 		27A8F088F58DA4315898A5AC /* FirebaseWorkoutSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E309F8689D1D63574F4193 /* FirebaseWorkoutSync.swift */; };
+		13A6E1B5D8F34D7C9A0B2E41 /* FirebaseCoachService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B6E1B5D8F34D7C9A0B2E41 /* FirebaseCoachService.swift */; };
 		34E8F17F5A8B942D0EDDEAAE /* WorkoutStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F219AC7B5B867E92BDC63296 /* WorkoutStoreTests.swift */; };
 		5918652CA834E248CC0F70F5 /* WorkoutStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505C546C2019DDE779B54634 /* WorkoutStore.swift */; };
 		59D1A6EC718880BDC96563D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABF7A12AEDF0BFFAB1E152 /* SettingsView.swift */; };
@@ -58,6 +59,7 @@
 		A4755DEA420B492DCEA17FB7 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = FutureBody/Assets.xcassets; sourceTree = "<group>"; };
 		A8ABF7A12AEDF0BFFAB1E152 /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = FutureBody/Views/SettingsView.swift; sourceTree = "<group>"; };
 		A8E309F8689D1D63574F4193 /* FirebaseWorkoutSync.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FirebaseWorkoutSync.swift; path = FutureBody/Services/FirebaseWorkoutSync.swift; sourceTree = "<group>"; };
+		13B6E1B5D8F34D7C9A0B2E41 /* FirebaseCoachService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FirebaseCoachService.swift; path = FutureBody/Services/FirebaseCoachService.swift; sourceTree = "<group>"; };
 		BBD653765F5B90C0DDDB38EF /* DailyStateSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DailyStateSheet.swift; path = FutureBody/Views/DailyStateSheet.swift; sourceTree = "<group>"; };
 		BC27CEBDFC58711006D9F759 /* LINESeedJP-Bold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = "LINESeedJP-Bold.ttf"; path = "FutureBody/Resources/Fonts/LINESeedJP-Bold.ttf"; sourceTree = "<group>"; };
 		CC4140DF9FCA23C34F2E906A /* ProgressViewScreen.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProgressViewScreen.swift; path = FutureBody/Views/ProgressViewScreen.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				57A2203C16C5A407CBF37D39 /* FutureBodyApp.swift */,
 				40BEC3BAADA532760F884779 /* Workout.swift */,
 				A8E309F8689D1D63574F4193 /* FirebaseWorkoutSync.swift */,
+				13B6E1B5D8F34D7C9A0B2E41 /* FirebaseCoachService.swift */,
 				505C546C2019DDE779B54634 /* WorkoutStore.swift */,
 				BBD653765F5B90C0DDDB38EF /* DailyStateSheet.swift */,
 				28686C23C317AC359E9F6D1D /* FutureScenarioSheet.swift */,
@@ -176,6 +179,7 @@
 				2169A633B04C9E551020C44A /* FirebaseCore */,
 				24D4C8991D60437B45EA9DE9 /* FirebaseAuth */,
 				95A807F5AEA7117C3067C3DA /* FirebaseFirestore */,
+				13C6E1B5D8F34D7C9A0B2E41 /* FirebaseFunctions */,
 			);
 			productName = FutureBody;
 			productReference = 09B56548EAC49B7E56DBCA46 /* FutureBody.app */;
@@ -279,6 +283,7 @@
 				93E74651534B53279A34C1E3 /* FutureBodyApp.swift in Sources */,
 				F95E524641AE2DA4F61314EA /* Workout.swift in Sources */,
 				27A8F088F58DA4315898A5AC /* FirebaseWorkoutSync.swift in Sources */,
+				13A6E1B5D8F34D7C9A0B2E41 /* FirebaseCoachService.swift in Sources */,
 				5918652CA834E248CC0F70F5 /* WorkoutStore.swift in Sources */,
 				8964228AD643DA64B9DADF92 /* DailyStateSheet.swift in Sources */,
 				6FB02F53CF95B4C9F42BA581 /* FutureScenarioSheet.swift in Sources */,
@@ -318,7 +323,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = W7WQFW7K74;
 				INFOPLIST_FILE = FutureBody/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -362,7 +367,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = W7WQFW7K74;
 				INFOPLIST_FILE = FutureBody/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -574,6 +579,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 891E21B22A8D7870FA240CFE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		13C6E1B5D8F34D7C9A0B2E41 /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 891E21B22A8D7870FA240CFE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

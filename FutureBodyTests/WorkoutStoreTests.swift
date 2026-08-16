@@ -69,6 +69,20 @@ final class WorkoutStoreTests: XCTestCase {
         XCTAssertEqual(secondStore.records.first?.sessionType, .rescue)
     }
 
+    func testLocalCoachPrioritizesRestWhenPainIsSelected() {
+        let state = DailyState(availableMinutes: 15, energy: .high, bodyStatus: .pain, interruptionRisk: false)
+        let message = LocalCoachMessage.make(state: state, plan: WorkoutCatalog.standard)
+
+        XCTAssertTrue(message.contains("休む"))
+    }
+
+    func testLocalCoachKeepsTheSmallestStepOnBusyLowEnergyDays() {
+        let state = DailyState(availableMinutes: 10, energy: .low, bodyStatus: .good, interruptionRisk: true)
+        let message = LocalCoachMessage.make(state: state, plan: WorkoutCatalog.rescue)
+
+        XCTAssertTrue(message.contains("2分"))
+    }
+
     private func testDefaults() -> UserDefaults {
         let suiteName = "FutureBodyTests.\(UUID().uuidString)"
         return UserDefaults(suiteName: suiteName)!

@@ -17,12 +17,19 @@
 - 記録画面
 - 仲間機能の導線
 - Firebase Authentication / Firestoreへの匿名同期
+- Firebase Functions経由のAIコーチ（APIキーは端末に置かない）
 
 ## Firebase設定
 
 Firebase設定ファイルは公開リポジトリに含めません。Firebase ConsoleからiOSアプリ用の`GoogleService-Info.plist`をダウンロードし、`FutureBody/GoogleService-Info.plist`に置いてください。ファイルがない場合もアプリは端末内保存で起動できます。
 
-本番ビルドでは、存在する設定ファイルをビルド時にアプリへコピーします。Firestore Rulesでユーザー自身の匿名アカウント以外からの読み書きを拒否しています。
+本番ビルドでは、存在する設定ファイルをビルド時にアプリへコピーします。Firestore Rulesでユーザー自身の匿名アカウント以外からの読み書きを拒否しています。起動時には同期済みデータを読み込み、端末内の未同期記録と統合します。
+
+## AIコーチ設定
+
+`functions`にFirebase Functionsの実装があります。AIコーチは、選択した状態、提案メニューID、最近の完了記録の要約だけを受け取り、既存メニューを変更せずに短い気づきを返します。痛みがある場合はAIへ送信せず、休む提案を返します。1ユーザーあたり1日3回までに制限し、生成結果は保存しません。
+
+本番でOpenAIを有効にする場合は、APIキーをFirebase Secret Managerの`OPENAI_API_KEY`へ登録し、`OPENAI_MODEL`でモデルを設定します。キーをiOSアプリ、GitHub、`functions/.env`へ置かないでください。キーが未設定でもアプリは端末内の提案へフォールバックします。
 
 ## 次の段階
 

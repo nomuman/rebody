@@ -16,7 +16,7 @@ firebase_package.requirement = {
 }
 project.root_object.package_references << firebase_package
 
-%w[FirebaseCore FirebaseAuth FirebaseFirestore].each do |product_name|
+%w[FirebaseCore FirebaseAuth FirebaseFirestore FirebaseFunctions].each do |product_name|
   product = project.new(Xcodeproj::Project::Object::XCSwiftPackageProductDependency)
   product.package = firebase_package
   product.product_name = product_name
@@ -42,7 +42,7 @@ target.build_configurations.each do |configuration|
   configuration.build_settings["OTHER_LDFLAGS"] = "$(inherited) -ObjC"
   configuration.build_settings["CODE_SIGN_STYLE"] = "Automatic"
   configuration.build_settings["DEVELOPMENT_TEAM"] = "W7WQFW7K74"
-  configuration.build_settings["CURRENT_PROJECT_VERSION"] = "6"
+  configuration.build_settings["CURRENT_PROJECT_VERSION"] = "7"
   configuration.build_settings["MARKETING_VERSION"] = "1.0.0"
   configuration.build_settings["ASSETCATALOG_COMPILER_APPICON_NAME"] = "AppIcon"
 end

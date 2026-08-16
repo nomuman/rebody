@@ -64,13 +64,27 @@ final class FirebaseWorkoutSync {
         try await save(record: record, under: userReference)
     }
 
+    func loadSnapshot() async throws -> FirebaseWorkoutSnapshot {
+        guard let userID else { throw FirebaseSyncError.notConnected }
+
+        let userReference = database.collection("users").document(userID)
+        let userDocument = try await userReference.getDocument()
+        let dailyState = userDocument.data().flatMap(Self.dailyState(from:))
+        let recordsDocument = try await userReference.collection("workoutRecords").getDocuments()
+        let records = recordsDocument.documents.compactMap(Self.record(from:))
+
+        return FirebaseWorkoutSnapshot(dailyState: dailyState, records: records)
+    }
+
     func deleteAccount() async throws {
         guard let userID else { return }
 
         let userReference = database.collection("users").document(userID)
-        let records = try await userReference.collection("workoutRecords").getDocuments()
-        for record in records.documents {
-            try await record.reference.delete()
+        for collectionName in ["workoutRecords", "coachUsage"] {
+            let documents = try await userReference.collection(collectionName).getDocuments()
+            for document in documents.documents {
+                try await document.reference.delete()
+            }
         }
         try await userReference.delete()
 
@@ -88,8 +102,58 @@ final class FirebaseWorkoutSync {
             "durationMinutes": record.durationMinutes
         ], merge: true)
     }
+
+    private static func dailyState(from data: [String: Any]) -> DailyState? {
+        guard let raw = data["dailyState"] as? [String: Any],
+              let availableMinutes = raw["availableMinutes"] as? Int,
+              let energyRaw = raw["energy"] as? String,
+              let energy = EnergyLevel(rawValue: energyRaw),
+              let bodyStatusRaw = raw["bodyStatus"] as? String,
+              let bodyStatus = BodyStatus(rawValue: bodyStatusRaw),
+              let interruptionRisk = raw["interruptionRisk"] as? Bool,
+              let focusRaw = raw["focus"] as? String,
+              let focus = FocusArea(rawValue: focusRaw)
+        else {
+            return nil
+        }
+
+        return DailyState(
+            availableMinutes: availableMinutes,
+            energy: energy,
+            bodyStatus: bodyStatus,
+            interruptionRisk: interruptionRisk,
+            focus: focus
+        )
+    }
+
+    private static func record(from document: QueryDocumentSnapshot) -> WorkoutRecord? {
+        guard let id = UUID(uuidString: document.documentID),
+              let data = document.data() as [String: Any]?,
+              let planID = data["planID"] as? String,
+              let sessionTypeRaw = data["sessionType"] as? String,
+              let sessionType = SessionType(rawValue: sessionTypeRaw),
+              let completedAt = (data["completedAt"] as? Timestamp)?.dateValue(),
+              let durationMinutes = data["durationMinutes"] as? Int
+        else {
+            return nil
+        }
+
+        return WorkoutRecord(
+            id: id,
+            planID: planID,
+            sessionType: sessionType,
+            completedAt: completedAt,
+            durationMinutes: durationMinutes
+        )
+    }
 }
 
 enum FirebaseSyncError: Error {
     case notConfigured
+    case notConnected
+}
+
+struct FirebaseWorkoutSnapshot {
+    let dailyState: DailyState?
+    let records: [WorkoutRecord]
 }

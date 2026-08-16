@@ -8,10 +8,14 @@ final class WorkoutStore: ObservableObject {
     @Published private(set) var records: [WorkoutRecord] = []
     @Published var reminderEnabled = false
     @Published private(set) var syncStatus: FirebaseSyncStatus = .localOnly
+    @Published private(set) var coachMessage = "今日できる分だけ、未来の自分へ一歩渡しましょう。"
+    @Published private(set) var coachSource: CoachMessageSource = .fallback
 
     private let persistenceKey = "futurebody.local-state"
     private let userDefaults: UserDefaults
     private var firebaseSync: FirebaseWorkoutSync?
+    private var lastCoachRequestKey: String?
+    private var stateChangedBeforeSync = false
 
     init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
@@ -56,6 +60,7 @@ final class WorkoutStore: ObservableObject {
 
     func updateDailyState(_ state: DailyState) {
         dailyState = state
+        stateChangedBeforeSync = true
         save()
         Task {
             await syncState()
@@ -119,6 +124,45 @@ final class WorkoutStore: ObservableObject {
         reminderEnabled = false
         firebaseSync = nil
         syncStatus = .localOnly
+        stateChangedBeforeSync = false
+        coachMessage = "今日できる分だけ、未来の自分へ一歩渡しましょう。"
+        coachSource = .fallback
+        lastCoachRequestKey = nil
+    }
+
+    func refreshCoachMessage(force: Bool = false) async {
+        let plan = recommendedPlan
+        let requestKey = coachRequestKey(plan: plan)
+        guard force || lastCoachRequestKey != requestKey else { return }
+        lastCoachRequestKey = requestKey
+        coachMessage = LocalCoachMessage.make(state: dailyState, plan: plan)
+        coachSource = .fallback
+
+        guard FirebaseApp.app() != nil else { return }
+        if firebaseSync == nil {
+            await connectToFirebase()
+        }
+        guard firebaseSync != nil else { return }
+
+        let request = CoachMessageRequest(
+            availableMinutes: dailyState.availableMinutes,
+            energy: dailyState.energy.rawValue,
+            bodyStatus: dailyState.bodyStatus.rawValue,
+            interruptionRisk: dailyState.interruptionRisk,
+            focus: dailyState.focus.rawValue,
+            recommendedPlanID: plan.id,
+            recentSessions: recentCoachSessions
+        )
+
+        do {
+            let response = try await FirebaseCoachService().request(request)
+            if !response.message.isEmpty {
+                coachMessage = response.message
+                coachSource = response.source
+            }
+        } catch {
+            coachSource = .fallback
+        }
     }
 
     private func scheduleReminder() async {
@@ -165,6 +209,12 @@ final class WorkoutStore: ObservableObject {
             let sync = FirebaseWorkoutSync()
             try await sync.connect()
             firebaseSync = sync
+            let snapshot = try await sync.loadSnapshot()
+            if !stateChangedBeforeSync, let remoteState = snapshot.dailyState {
+                dailyState = remoteState
+            }
+            mergeRecords(snapshot.records)
+            save()
             try await sync.save(state: dailyState, records: records)
             syncStatus = .connected
         } catch {
@@ -196,6 +246,38 @@ final class WorkoutStore: ObservableObject {
         } catch {
             syncStatus = .localOnly
         }
+    }
+
+    private var recentCoachSessions: [CoachMessageRequest.RecentSession] {
+        let calendar = Calendar.current
+        return records
+            .sorted { $0.completedAt > $1.completedAt }
+            .prefix(8)
+            .map { record in
+                CoachMessageRequest.RecentSession(
+                    sessionType: record.sessionType.rawValue,
+                    durationMinutes: record.durationMinutes,
+                    daysAgo: max(0, calendar.dateComponents([.day], from: record.completedAt, to: Date()).day ?? 0)
+                )
+            }
+    }
+
+    private func coachRequestKey(plan: WorkoutPlan) -> String {
+        let latestRecord = records.sorted { $0.completedAt > $1.completedAt }.first?.id.uuidString ?? "none"
+        return [
+            dailyState.focus.rawValue,
+            dailyState.energy.rawValue,
+            dailyState.bodyStatus.rawValue,
+            String(dailyState.availableMinutes),
+            String(dailyState.interruptionRisk),
+            plan.id,
+            latestRecord
+        ].joined(separator: "|")
+    }
+
+    private func mergeRecords(_ remoteRecords: [WorkoutRecord]) {
+        let merged = Dictionary(uniqueKeysWithValues: (remoteRecords + records).map { ($0.id, $0) })
+        records = merged.values.sorted { $0.completedAt < $1.completedAt }
     }
 }
 

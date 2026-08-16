@@ -4,6 +4,11 @@ build/
 .build/
 .swiftpm/
 .firebase/
+functions/lib/
+functions/node_modules/
+functions/.env
+functions/.env.*
+!functions/.env.example
 *.xcuserstate
 xcuserdata/
 *.moved-aside
