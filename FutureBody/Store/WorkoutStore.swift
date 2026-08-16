@@ -239,9 +239,19 @@ final class WorkoutStore: ObservableObject {
     }
 
     private func mergeRecords(_ remoteRecords: [WorkoutRecord]) {
-        let merged = Dictionary(uniqueKeysWithValues: (remoteRecords + records).map { ($0.id, $0) })
-        records = merged.values.sorted { $0.completedAt < $1.completedAt }
+        records = mergeWorkoutRecords(remoteRecords: remoteRecords, localRecords: records)
     }
+}
+
+func mergeWorkoutRecords(remoteRecords: [WorkoutRecord], localRecords: [WorkoutRecord]) -> [WorkoutRecord] {
+    var merged = [UUID: WorkoutRecord](minimumCapacity: remoteRecords.count + localRecords.count)
+    for record in remoteRecords {
+        merged[record.id] = record
+    }
+    for record in localRecords {
+        merged[record.id] = record
+    }
+    return merged.values.sorted { $0.completedAt < $1.completedAt }
 }
 
 private struct PersistedState: Codable {

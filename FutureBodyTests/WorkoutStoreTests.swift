@@ -83,6 +83,29 @@ final class WorkoutStoreTests: XCTestCase {
         XCTAssertTrue(message.contains("2分"))
     }
 
+    func testMergingRemoteAndLocalDuplicateRecordsKeepsOneRecord() {
+        let id = UUID()
+        let remoteRecord = WorkoutRecord(
+            id: id,
+            planID: "remote-plan",
+            sessionType: .standard,
+            completedAt: Date(timeIntervalSince1970: 100),
+            durationMinutes: 10
+        )
+        let localRecord = WorkoutRecord(
+            id: id,
+            planID: "local-plan",
+            sessionType: .rescue,
+            completedAt: Date(timeIntervalSince1970: 200),
+            durationMinutes: 2
+        )
+
+        let merged = mergeWorkoutRecords(remoteRecords: [remoteRecord], localRecords: [localRecord])
+
+        XCTAssertEqual(merged.count, 1)
+        XCTAssertEqual(merged.first?.planID, "local-plan")
+    }
+
     private func testDefaults() -> UserDefaults {
         let suiteName = "FutureBodyTests.\(UUID().uuidString)"
         return UserDefaults(suiteName: suiteName)!

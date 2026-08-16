@@ -7,7 +7,7 @@
 - Bundle ID：`app.futurebody.mobile`
 - App ID：`6802005144`
 - Team：OUR ENGINEERING（`W7WQFW7K74`）
-- 提出候補：1.0.0（Build 9）
+- 提出候補：1.0.0（Build 10）
 - 主カテゴリ：ヘルスケア／フィットネス
 - 年齢レーティング：App Store Connectの質問票で該当なしを回答（4+想定、Made for Kidsではない）
 - 輸出コンプライアンス：追加の暗号化なし（`ITSAppUsesNonExemptEncryption = false`）
@@ -51,7 +51,7 @@
 
 ## 提出前の操作
 
-1. Build 9の処理が完了したことを確認する
+1. Build 10の処理が完了したことを確認する
 2. 上記メタデータ、App Privacy、年齢レーティングを登録する
 3. スクリーンショットを登録する
 4. App Informationで「規制対象医療機器：いいえ」を回答し、DSAの質問が表示された場合は運営者情報に基づいて回答する
