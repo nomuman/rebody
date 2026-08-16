@@ -1,0 +1,12 @@
+.DS_Store
+DerivedData/
+build/
+.build/
+.swiftpm/
+*.xcuserstate
+xcuserdata/
+*.moved-aside
+*.xcarchive
+*.ipa
+*.dSYM
+FutureBody/GoogleService-Info.plist
