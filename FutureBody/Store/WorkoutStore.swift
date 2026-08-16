@@ -137,32 +137,9 @@ final class WorkoutStore: ObservableObject {
         lastCoachRequestKey = requestKey
         coachMessage = LocalCoachMessage.make(state: dailyState, plan: plan)
         coachSource = .fallback
-
-        guard FirebaseApp.app() != nil else { return }
-        if firebaseSync == nil {
-            await connectToFirebase()
-        }
-        guard firebaseSync != nil else { return }
-
-        let request = CoachMessageRequest(
-            availableMinutes: dailyState.availableMinutes,
-            energy: dailyState.energy.rawValue,
-            bodyStatus: dailyState.bodyStatus.rawValue,
-            interruptionRisk: dailyState.interruptionRisk,
-            focus: dailyState.focus.rawValue,
-            recommendedPlanID: plan.id,
-            recentSessions: recentCoachSessions
-        )
-
-        do {
-            let response = try await FirebaseCoachService().request(request)
-            if !response.message.isEmpty {
-                coachMessage = response.message
-                coachSource = response.source
-            }
-        } catch {
-            coachSource = .fallback
-        }
+        let result = await LocalCoachService.makeMessage(state: dailyState, plan: plan, records: records)
+        coachMessage = result.message
+        coachSource = result.source
     }
 
     private func scheduleReminder() async {
@@ -246,20 +223,6 @@ final class WorkoutStore: ObservableObject {
         } catch {
             syncStatus = .localOnly
         }
-    }
-
-    private var recentCoachSessions: [CoachMessageRequest.RecentSession] {
-        let calendar = Calendar.current
-        return records
-            .sorted { $0.completedAt > $1.completedAt }
-            .prefix(8)
-            .map { record in
-                CoachMessageRequest.RecentSession(
-                    sessionType: record.sessionType.rawValue,
-                    durationMinutes: record.durationMinutes,
-                    daysAgo: max(0, calendar.dateComponents([.day], from: record.completedAt, to: Date()).day ?? 0)
-                )
-            }
     }
 
     private func coachRequestKey(plan: WorkoutPlan) -> String {

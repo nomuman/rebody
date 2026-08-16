@@ -116,7 +116,7 @@ struct TodayView: View {
     private var coachCard: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Label(store.coachSource == .ai ? "AIコーチからのひとこと" : "今日のコーチ", systemImage: "sparkles")
+                Label(store.coachSource == .onDevice ? "iPhone内のAIコーチ" : "今日のコーチ", systemImage: "sparkles")
                     .font(AppFont.bold(16, relativeTo: .headline))
                 Spacer()
                 Button {
@@ -135,7 +135,7 @@ struct TodayView: View {
                 .font(AppFont.regular(15, relativeTo: .body))
                 .foregroundStyle(.primary)
 
-            Text(store.coachSource == .ai ? "今日の状態と最近の一歩をもとにしています" : "今日の状態から、すぐできる一歩を提案しています")
+            Text(store.coachSource == .onDevice ? "このiPhone内で、今日の状態と最近の一歩をもとにしています" : "今日の状態から、すぐできる一歩を提案しています")
                 .font(AppFont.regular(12, relativeTo: .caption))
                 .foregroundStyle(.secondary)
         }

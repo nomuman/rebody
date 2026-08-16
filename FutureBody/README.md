@@ -17,7 +17,7 @@
 - 記録画面
 - 仲間機能の導線
 - Firebase Authentication / Firestoreへの匿名同期
-- Firebase Functions経由のAIコーチ（APIキーは端末に置かない）
+- iPhone内のAIコーチ（Apple Foundation Models、利用できない端末は安全なローカル提案）
 
 ## Firebase設定
 
@@ -27,9 +27,7 @@ Firebase設定ファイルは公開リポジトリに含めません。Firebase 
 
 ## AIコーチ設定
 
-`functions`にFirebase Functionsの実装があります。AIコーチは、選択した状態、提案メニューID、最近の完了記録の要約だけを受け取り、既存メニューを変更せずに短い気づきを返します。痛みがある場合はAIへ送信せず、休む提案を返します。1ユーザーあたり1日3回までに制限し、生成結果は保存しません。
-
-本番でOpenAIを有効にする場合は、APIキーをFirebase Secret Managerの`OPENAI_API_KEY`へ登録し、`OPENAI_MODEL`でモデルを設定します。キーをiOSアプリ、GitHub、`functions/.env`へ置かないでください。キーが未設定でもアプリは端末内の提案へフォールバックします。
+AIコーチは入力、生成、フォールバックのすべてをiPhone内で行います。Apple Foundation Modelsが利用できるiOS 26以降の端末ではオンデバイスモデルを使い、利用できない端末やモデル準備中は安全なルールベース提案に戻ります。FirebaseへAI入力や生成結果は送信しません。
 
 ## 次の段階
 

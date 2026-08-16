@@ -2,8 +2,8 @@
 
 ## 現在の状態
 
-- App Store Connectへの提出候補Build 7：Firebase復元とAIコーチ導線を含む
-- Build 7のApp Store Connect処理状態：これからアップロード
+- App Store Connectへの提出候補Build 8：Firebase復元とiPhone内AIコーチ導線を含む
+- Build 8のApp Store Connect処理状態：これからアップロード
 
 ## 完了済み
 
@@ -26,7 +26,7 @@
 2. `app.futurebody.mobile`のTeamがOUR ENGINEERINGになっていることを確認する（完了）
 3. App Store Connectで、アプリ名、説明、キーワード、カテゴリ、年齢レーティング、プライバシー回答、スクリーンショットを登録する
 4. App Informationで、規制対象医療機器を「いいえ」と回答し、DSAの質問が表示された場合は運営者情報に基づいて回答する
-5. Build 7の処理が完了したら、輸出コンプライアンスを確認してTestFlightで内部テストを行う
+5. Build 8の処理が完了したら、輸出コンプライアンスを確認してTestFlightで内部テストを行う
 6. 審査情報を入力し、「Add for Review」→「Submit for Review」を実行する
 
 ## IPA作成とアップロード

@@ -41,7 +41,7 @@ struct SettingsView: View {
             } header: {
                 Text("データ")
             } footer: {
-                Text("トレーニング記録と今日の状態だけを匿名で同期します。写真は送信しません。AIコーチを使うと、状態と最近の記録の要約がAI処理に使われます。")
+                Text("トレーニング記録と今日の状態だけを匿名で同期します。写真は送信しません。AIコーチの処理はこのiPhone内で行います。")
             }
 
             Section {
@@ -54,7 +54,7 @@ struct SettingsView: View {
             }
 
             Section {
-                Text("写真や生成画像は端末内に保存します。Firebaseには匿名アカウント、今日の状態、トレーニング完了記録を保存します。AIコーチには氏名・メールアドレス・写真を送らず、短い提案の生成に必要な状態と記録の要約だけを使います。")
+                Text("写真や生成画像は端末内に保存します。Firebaseには匿名アカウント、今日の状態、トレーニング完了記録を保存します。AIコーチの入力と生成結果は外部へ送信しません。")
                     .font(AppFont.regular(14, relativeTo: .subheadline))
                     .foregroundStyle(.secondary)
             } header: {
