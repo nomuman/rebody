@@ -2,8 +2,9 @@
 
 ## 現在の状態
 
-- App Store Connectへの提出候補Build 8：Firebase復元とiPhone内AIコーチ導線を含む
-- Build 8のApp Store Connect処理状態：これからアップロード
+- App Store Connectへアップロード済みのBuild 8：Firebase復元とiPhone内AIコーチ導線を含む
+- App Store Connectへアップロード済みのBuild 9：未使用の仲間タブを初回リリースから外し、削除ルールを補強した提出候補
+- Build 9のApp Store Connect処理状態：アップロード成功。App Store Connectで処理完了後にTestFlight確認と審査提出を行う
 
 ## 完了済み
 
@@ -15,9 +16,10 @@
 - Privacy Manifestの追加（匿名アカウントに紐づく同期データを正確に申告）
 - アプリ内のアカウント・データ削除
 - 痛みがある場合の休止導線と安全上の注意
-- 8件のユニットテスト
+- 10件のユニットテスト
 - OUR ENGINEERING（W7WQFW7K74）向けStore署名とアップロード
 - App Store掲載文案と審査メモ
+- 実際のアプリ画面から作成した6.3インチ・6.9インチ用スクリーンショット
 - GitHub公開リポジトリの秘密情報スキャン
 
 ## App Store Connectで必要な作業
@@ -26,7 +28,7 @@
 2. `app.futurebody.mobile`のTeamがOUR ENGINEERINGになっていることを確認する（完了）
 3. App Store Connectで、アプリ名、説明、キーワード、カテゴリ、年齢レーティング、プライバシー回答、スクリーンショットを登録する
 4. App Informationで、規制対象医療機器を「いいえ」と回答し、DSAの質問が表示された場合は運営者情報に基づいて回答する
-5. Build 8の処理が完了したら、輸出コンプライアンスを確認してTestFlightで内部テストを行う
+5. Build 9の処理完了後、輸出コンプライアンスを確認してTestFlightで内部テストを行う
 6. 審査情報を入力し、「Add for Review」→「Submit for Review」を実行する
 
 ## IPA作成とアップロード

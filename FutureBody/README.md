@@ -15,7 +15,6 @@
 - 20:50の通知設定
 - 未来シナリオのフォールバック表示
 - 記録画面
-- 仲間機能の導線
 - Firebase Authentication / Firestoreへの匿名同期
 - iPhone内のAIコーチ（Apple Foundation Models、利用できない端末は安全なローカル提案）
 
