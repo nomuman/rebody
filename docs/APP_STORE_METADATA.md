@@ -10,6 +10,11 @@
 - 主カテゴリ：ヘルスケア／フィットネス
 - 年齢制限：4+
 
+## スクリーンショット素材
+
+- iPhone 6.3インチ相当：[iphone-6.3-home.png](app-store-screenshots/iphone-6.3-home.png)
+- iPhone 6.9インチ相当：[iphone-6.9-home.png](app-store-screenshots/iphone-6.9-home.png)
+
 ## 説明文
 
 筋トレを始めたいのに、仕事・家族・休息・趣味が優先されて、いつの間にか身体だけが後回しになる。
