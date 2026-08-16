@@ -7,12 +7,12 @@ repository_root=${script_directory:h}
 archive_path=${ARCHIVE_PATH:-/tmp/rebody-release.xcarchive}
 export_path=${EXPORT_PATH:-/tmp/rebody-release-export}
 team_id=W7WQFW7K74
+export_destination=${EXPORT_DESTINATION:-upload}
 
 cd "$repository_root"
 
 if ! security find-identity -v -p codesigning | rg -q "Apple Distribution:.*\\(${team_id}\\)"; then
-  echo "OUR ENGINEERING (${team_id}) のApple Distribution証明書が見つかりません。"
-  exit 1
+  echo "配布証明書はMacに未登録です。Xcodeの自動署名で作成を試みます。"
 fi
 
 export_options=$(mktemp /tmp/rebody-export-options.XXXXXX.plist)
@@ -24,7 +24,7 @@ cat > "$export_options" <<PLIST
 <plist version="1.0">
 <dict>
 	<key>destination</key>
-	<string>export</string>
+	<string>${export_destination}</string>
 	<key>method</key>
 	<string>app-store-connect</string>
 	<key>signingStyle</key>
@@ -54,6 +54,11 @@ xcodebuild \
   -exportPath "$export_path" \
   -exportOptionsPlist "$export_options" \
   -allowProvisioningUpdates
+
+if [[ "$export_destination" == "upload" ]]; then
+  echo "App Store Connectへのアップロードが完了しました。"
+  exit 0
+fi
 
 ipa_path=$(find "$export_path" -maxdepth 1 -type f -name '*.ipa' -print -quit)
 if [[ -z "$ipa_path" ]]; then
