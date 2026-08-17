@@ -18,11 +18,11 @@ final class WorkoutStoreTests: XCTestCase {
         XCTAssertTrue(store.shouldRestToday)
     }
 
-    func testInterruptionRiskRecommendsRescuePlan() {
+    func testInterruptionRiskDoesNotReplaceFifteenMinuteChoice() {
         let store = WorkoutStore(userDefaults: testDefaults())
         store.dailyState = DailyState(availableMinutes: 15, energy: .high, bodyStatus: .good, interruptionRisk: true)
 
-        XCTAssertEqual(store.recommendedPlan.type, .rescue)
+        XCTAssertEqual(store.recommendedPlan.type, .extended)
     }
 
     func testHighEnergyAndTimeRecommendsExtendedPlan() {
@@ -30,6 +30,26 @@ final class WorkoutStoreTests: XCTestCase {
         store.dailyState = DailyState(availableMinutes: 15, energy: .high, bodyStatus: .good, interruptionRisk: false)
 
         XCTAssertEqual(store.recommendedPlan.type, .extended)
+        XCTAssertEqual(store.recommendedPlan.type.durationLabel, "15分以上")
+        XCTAssertEqual(store.recommendedPlan.rounds, 3)
+    }
+
+    func testTenMinutePlanUsesTwoRounds() {
+        let store = WorkoutStore(userDefaults: testDefaults())
+        store.dailyState = DailyState(availableMinutes: 10, energy: .normal, bodyStatus: .good, interruptionRisk: true)
+
+        XCTAssertEqual(store.recommendedPlan.type, .standard)
+        XCTAssertEqual(store.recommendedPlan.type.durationLabel, "10分")
+        XCTAssertEqual(store.recommendedPlan.rounds, 2)
+        XCTAssertTrue(store.recommendedPlan.format.contains("2周"))
+    }
+
+    func testWorkoutVariationsUseDifferentExerciseRoutes() {
+        let first = WorkoutCatalog.plan(for: .appearance, type: .standard, variation: 0)
+        let second = WorkoutCatalog.plan(for: .appearance, type: .standard, variation: 1)
+
+        XCTAssertNotEqual(first.id, second.id)
+        XCTAssertNotEqual(first.exercises.map(\.name), second.exercises.map(\.name))
     }
 
     func testAppearanceFocusRecommendsAppearancePlan() {

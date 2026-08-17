@@ -5,6 +5,7 @@ struct WorkoutPlayerView: View {
     @EnvironmentObject private var store: WorkoutStore
     @Environment(\.dismiss) private var dismiss
     @State private var currentIndex = 0
+    @State private var currentRound = 0
     @State private var completed = false
     @State private var showingExitConfirmation = false
 
@@ -47,6 +48,15 @@ struct WorkoutPlayerView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 progressHeader
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("このメニューの進め方")
+                        .font(AppFont.bold(17, relativeTo: .headline))
+                    Text("\(plan.format)。指定回数をゆっくり行い、最後に2〜3回できそうな余裕を残します。痛みが出たら中止してください。")
+                        .font(AppFont.regular(14, relativeTo: .subheadline))
+                        .foregroundStyle(.secondary)
+                }
+                .cardSurface()
 
                 VStack(spacing: 14) {
                     Image(systemName: currentExercise.systemImage)
@@ -111,7 +121,7 @@ struct WorkoutPlayerView: View {
                 .cardSurface()
 
                 HStack {
-                    Text("今日の目標")
+                    Text("目標回数・時間")
                         .font(AppFont.regular(15, relativeTo: .body))
                         .foregroundStyle(.secondary)
                     Spacer()
@@ -124,7 +134,7 @@ struct WorkoutPlayerView: View {
                 Button {
                     advance()
                 } label: {
-                    Text(currentIndex == plan.exercises.count - 1 ? "この種目を終えて完了" : "できた、次の種目へ")
+                    Text(advanceButtonTitle)
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 .padding(.top, 2)
@@ -138,15 +148,30 @@ struct WorkoutPlayerView: View {
     private var progressHeader: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("種目 \(currentIndex + 1) / \(plan.exercises.count)")
-                    .font(AppFont.bold(14, relativeTo: .subheadline))
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("ラウンド \(currentRound + 1) / \(plan.rounds)")
+                        .font(AppFont.bold(14, relativeTo: .subheadline))
+                    Text("種目 \(currentIndex + 1) / \(plan.exercises.count)")
+                        .font(AppFont.regular(12, relativeTo: .caption))
+                        .foregroundStyle(.secondary)
+                }
                 Spacer()
+                Text(plan.type.durationLabel)
+                    .font(AppFont.bold(14, relativeTo: .subheadline))
+                    .foregroundStyle(AppColor.accent)
+            }
+
+            HStack {
                 Text("違和感が出たら、やめて大丈夫")
+                    .font(AppFont.regular(12, relativeTo: .caption))
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Text("合計 \(plan.rounds * plan.exercises.count)種目")
                     .font(AppFont.regular(12, relativeTo: .caption))
                     .foregroundStyle(.secondary)
             }
 
-            ProgressView(value: Double(currentIndex + 1), total: Double(plan.exercises.count))
+            ProgressView(value: Double(currentRound * plan.exercises.count + currentIndex + 1), total: Double(plan.rounds * plan.exercises.count))
                 .tint(AppColor.accent)
         }
     }
@@ -163,7 +188,7 @@ struct WorkoutPlayerView: View {
                 Text("今日の身体を更新しました")
                     .font(AppFont.extraBold(27, relativeTo: .title))
                     .multilineTextAlignment(.center)
-                Text("\(plan.type.minutes)分の行動が、魅力と能力の土台になります。")
+                Text("\(plan.type.durationLabel)の行動が、魅力と能力の土台になります。")
                     .font(AppFont.regular(16, relativeTo: .body))
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -181,11 +206,24 @@ struct WorkoutPlayerView: View {
     }
 
     private func advance() {
-        if currentIndex == plan.exercises.count - 1 {
+        if currentIndex == plan.exercises.count - 1 && currentRound == plan.rounds - 1 {
             store.complete(plan: plan)
             completed = true
+        } else if currentIndex == plan.exercises.count - 1 {
+            currentRound += 1
+            currentIndex = 0
         } else {
             currentIndex += 1
         }
+    }
+
+    private var advanceButtonTitle: String {
+        if currentIndex < plan.exercises.count - 1 {
+            return "できた、次の種目へ"
+        }
+        if currentRound < plan.rounds - 1 {
+            return "この周を終えて、次の周へ"
+        }
+        return "この種目を終えて完了"
     }
 }

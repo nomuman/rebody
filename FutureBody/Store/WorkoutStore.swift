@@ -26,15 +26,18 @@ final class WorkoutStore: ObservableObject {
     }
 
     var recommendedPlan: WorkoutPlan {
-        if dailyState.availableMinutes <= 2 || dailyState.energy == .low || dailyState.bodyStatus == .pain || dailyState.interruptionRisk {
-            return WorkoutCatalog.plan(for: dailyState.focus, type: .rescue)
+        let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
+        let variation = (records.count + dayOfYear) % WorkoutCatalog.variationCount
+
+        if dailyState.availableMinutes <= 2 || dailyState.bodyStatus == .pain || dailyState.energy == .low {
+            return WorkoutCatalog.plan(for: dailyState.focus, type: .rescue, variation: variation)
         }
 
-        if dailyState.availableMinutes >= 15 && dailyState.energy == .high && dailyState.bodyStatus == .good {
-            return WorkoutCatalog.plan(for: dailyState.focus, type: .extended)
+        if dailyState.availableMinutes >= 15 {
+            return WorkoutCatalog.plan(for: dailyState.focus, type: .extended, variation: variation)
         }
 
-        return WorkoutCatalog.plan(for: dailyState.focus, type: .standard)
+        return WorkoutCatalog.plan(for: dailyState.focus, type: .standard, variation: variation)
     }
 
     var completedThisWeek: Int {

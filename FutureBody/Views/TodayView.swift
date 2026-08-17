@@ -175,12 +175,15 @@ struct TodayView: View {
                             .foregroundStyle(.secondary)
                         Text(store.recommendedPlan.title)
                             .font(AppFont.bold(20, relativeTo: .title3))
+                        Text("\(store.recommendedPlan.type.durationLabel) · \(store.recommendedPlan.format)")
+                            .font(AppFont.bold(14, relativeTo: .subheadline))
+                            .foregroundStyle(AppColor.accent)
                         Text(store.recommendedPlan.subtitle)
                             .font(AppFont.regular(14, relativeTo: .subheadline))
                             .foregroundStyle(.secondary)
                     }
                     Spacer()
-                    Text("\(store.recommendedPlan.type.minutes)分")
+                    Text(store.recommendedPlan.type.durationLabel)
                         .font(AppFont.extraBold(24, relativeTo: .title2))
                         .foregroundStyle(AppColor.accent)
                 }
@@ -188,7 +191,7 @@ struct TodayView: View {
                 Button {
                     showingWorkout = true
                 } label: {
-                    Label("\(store.recommendedPlan.type.minutes)分で始める", systemImage: "play.fill")
+                    Label("\(store.recommendedPlan.type.durationLabel)を始める", systemImage: "play.fill")
                 }
                 .buttonStyle(PrimaryButtonStyle())
             }
@@ -226,7 +229,18 @@ struct TodayView: View {
     }
 
     private var stateSummary: String {
-        "\(store.dailyState.focus.title) · \(store.dailyState.availableMinutes)分 · \(store.dailyState.energy.title) · \(store.dailyState.bodyStatus.title)"
+        "\(store.dailyState.focus.title) · \(availableTimeLabel) · \(store.dailyState.energy.title) · \(store.dailyState.bodyStatus.title)"
+    }
+
+    private var availableTimeLabel: String {
+        switch store.dailyState.availableMinutes {
+        case ...2:
+            return "2分"
+        case 3..<15:
+            return "10分"
+        default:
+            return "15分以上"
+        }
     }
 }
 

@@ -96,8 +96,20 @@ enum LocalCoachMessage {
             return "痛みがある日は休むのが、魅力と能力を守る今日の一手です。"
         }
 
-        if state.interruptionRisk || state.availableMinutes <= 2 || state.energy == .low {
+        if state.availableMinutes <= 2 || state.energy == .low {
             return "今日は2分で十分。自由時間の前に、未来の自分へ一歩だけ渡しましょう。"
+        }
+
+        if state.interruptionRisk {
+            return "途中で止まっても大丈夫。\(plan.type.durationLabel)のうち、まず1周を丁寧に進めましょう。"
+        }
+
+        if plan.type == .extended {
+            return "今日は15分以上。3周で胸・脚・お腹を順番に使い、見た目と動ける力を伸ばしましょう。"
+        }
+
+        if plan.type == .standard {
+            return "今日は10分。2周をフォーム優先で行い、最後に2〜3回余裕が残る強さで続けましょう。"
         }
 
         switch state.focus {

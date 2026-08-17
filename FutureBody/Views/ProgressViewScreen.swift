@@ -45,7 +45,7 @@ struct ProgressViewScreen: View {
             return "できた"
         }
 
-        return "\(store.recommendedPlan.type.minutes)分"
+        return store.recommendedPlan.type.durationLabel
     }
 
     private func metric(title: String, value: String, detail: String) -> some View {
