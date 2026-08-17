@@ -4,7 +4,7 @@
 
 - App Store Connectへアップロード済みのBuild 8：Firebase復元とiPhone内AIコーチ導線を含む過去ビルド
 - App Store Connectへアップロード済みのBuild 9：未使用の仲間タブを初回リリースから外し、削除ルールを補強した過去ビルド
-- 提出候補のBuild 12：ホーム画面から時間をすぐ選べるようにし、見出しを整理したビルド。App Store Connectで処理完了後にTestFlight確認と審査提出を行う
+- App Store Connectへアップロード済みのBuild 12：ホーム画面から時間をすぐ選べるようにし、見出しを整理したビルド。現在はApp Store Connectで処理中
 
 ## 完了済み
 
