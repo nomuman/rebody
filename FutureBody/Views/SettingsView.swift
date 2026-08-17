@@ -54,7 +54,7 @@ struct SettingsView: View {
             }
 
             Section {
-                Text("写真や生成画像は端末内に保存します。Firebaseには匿名アカウント、今日の状態、トレーニング完了記録を保存します。AIコーチの入力と生成結果は外部へ送信しません。")
+                Text("写真は収集しません。Firebaseには匿名アカウント、今日の状態、トレーニング完了記録を保存します。AIコーチの入力と生成結果は外部へ送信しません。")
                     .font(AppFont.regular(14, relativeTo: .subheadline))
                     .foregroundStyle(.secondary)
             } header: {

@@ -11,6 +11,7 @@ struct TodayView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 header
+                durationChooser
                 recommendationCard
                 coachCard
                 stateCard
@@ -59,13 +60,60 @@ struct TodayView: View {
             Text(greeting)
                 .font(AppFont.regular(15, relativeTo: .subheadline))
                 .foregroundStyle(.secondary)
-            Text(store.completedToday ? "今日の身体を更新しました" : "魅力と能力を、今日も更新")
-                .font(AppFont.extraBold(34, relativeTo: .largeTitle))
+            Text(store.completedToday ? "今日の一歩を完了" : "今日の一歩")
+                .font(AppFont.extraBold(26, relativeTo: .title))
                 .foregroundStyle(.primary)
-            Text(store.completedToday ? "完璧よりも、戻ってこられることが変化をつくります。" : "お腹・胸・腕・動ける力。今日は変えたいところから始めます。")
-                .font(AppFont.regular(16, relativeTo: .body))
+            Text(store.completedToday ? "完璧よりも、戻ってこられることが変化をつくります。" : "魅力と能力は、今日の一回から")
+                .font(AppFont.regular(15, relativeTo: .body))
                 .foregroundStyle(.secondary)
         }
+    }
+
+    private var durationChooser: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            SectionHeading("今日は何分？", subtitle: "選んだ時間に合わせてメニューを組みます")
+
+            HStack(spacing: 8) {
+                durationOption(minutes: 2, title: "2分", subtitle: "まず一歩")
+                durationOption(minutes: 10, title: "10分", subtitle: "土台づくり")
+                durationOption(minutes: 15, title: "15分以上", subtitle: "しっかり")
+            }
+
+            if store.shouldRestToday {
+                Label("痛みがあるため、今日は休む提案です", systemImage: "pause.circle")
+                    .font(AppFont.regular(13, relativeTo: .caption))
+                    .foregroundStyle(.secondary)
+            } else if store.dailyState.energy == .low && selectedDuration > 2 {
+                Label("疲れが強い日は、身体に合わせて短く調整します", systemImage: "heart.text.square")
+                    .font(AppFont.regular(13, relativeTo: .caption))
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .cardSurface()
+    }
+
+    private func durationOption(minutes: Int, title: String, subtitle: String) -> some View {
+        let isSelected = selectedDuration == minutes
+
+        return Button {
+            chooseDuration(minutes)
+        } label: {
+            VStack(spacing: 4) {
+                Text(title)
+                    .font(AppFont.bold(18, relativeTo: .headline))
+                Text(subtitle)
+                    .font(AppFont.regular(11, relativeTo: .caption))
+                    .lineLimit(1)
+            }
+            .foregroundStyle(isSelected ? .white : .primary)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 11)
+            .background(isSelected ? AppColor.accent : Color(uiColor: .tertiarySystemBackground))
+            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("\(title)のトレーニング")
+        .accessibilityValue(isSelected ? "選択中" : "未選択")
     }
 
     private var futureCard: some View {
@@ -105,7 +153,7 @@ struct TodayView: View {
         VStack(alignment: .leading, spacing: 14) {
             SectionHeading("今日の狙いと条件", subtitle: stateSummary)
 
-            Button("条件を選び直す") {
+            Button("目的・体調を変える") {
                 showingState = true
             }
             .buttonStyle(SecondaryButtonStyle())
@@ -159,7 +207,7 @@ struct TodayView: View {
                     }
                 }
 
-                Button("条件を選び直す") {
+                Button("目的・体調を変える") {
                     showingState = true
                 }
                 .buttonStyle(SecondaryButtonStyle())
@@ -240,6 +288,26 @@ struct TodayView: View {
             return "10分"
         default:
             return "15分以上"
+        }
+    }
+
+    private var selectedDuration: Int {
+        switch store.dailyState.availableMinutes {
+        case ...2:
+            return 2
+        case 3..<15:
+            return 10
+        default:
+            return 15
+        }
+    }
+
+    private func chooseDuration(_ minutes: Int) {
+        var state = store.dailyState
+        state.availableMinutes = minutes
+        store.updateDailyState(state)
+        Task {
+            await store.refreshCoachMessage(force: true)
         }
     }
 }

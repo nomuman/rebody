@@ -61,7 +61,7 @@ struct DailyStateSheet: View {
                 } header: {
                     Text("今日の生活")
                 } footer: {
-                    Text("オンなら、短く終わるメニューを優先します。中断しても、戻ってこられれば成功です。")
+                    Text("オンでも選んだ時間は変えません。途中で呼ばれたら、まず1周を丁寧に行えば十分です。")
                 }
             }
             .font(AppFont.regular(16, relativeTo: .body))

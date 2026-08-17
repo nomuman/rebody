@@ -4,7 +4,7 @@
 
 - App Store Connectへアップロード済みのBuild 8：Firebase復元とiPhone内AIコーチ導線を含む過去ビルド
 - App Store Connectへアップロード済みのBuild 9：未使用の仲間タブを初回リリースから外し、削除ルールを補強した過去ビルド
-- 提出候補のBuild 11：時間表示とラウンド進行を修正し、メニューを3ルートに増やしたビルド。App Store Connectで処理完了後にTestFlight確認と審査提出を行う
+- 提出候補のBuild 12：ホーム画面から時間をすぐ選べるようにし、見出しを整理したビルド。App Store Connectで処理完了後にTestFlight確認と審査提出を行う
 
 ## 完了済み
 
@@ -28,7 +28,7 @@
 2. `app.futurebody.mobile`のTeamがOUR ENGINEERINGになっていることを確認する（完了）
 3. App Store Connectで、アプリ名、説明、キーワード、カテゴリ、年齢レーティング、プライバシー回答、スクリーンショットを登録する
 4. App Informationで、規制対象医療機器を「いいえ」と回答し、DSAの質問が表示された場合は運営者情報に基づいて回答する
-5. Build 11の処理完了後、輸出コンプライアンスを確認してTestFlightで内部テストを行う
+5. Build 12の処理完了後、輸出コンプライアンスを確認してTestFlightで内部テストを行う
 6. 審査情報を入力し、「Add for Review」→「Submit for Review」を実行する
 
 ## IPA作成とアップロード

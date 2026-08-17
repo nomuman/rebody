@@ -42,7 +42,7 @@ target.build_configurations.each do |configuration|
   configuration.build_settings["OTHER_LDFLAGS"] = "$(inherited) -ObjC"
   configuration.build_settings["CODE_SIGN_STYLE"] = "Automatic"
   configuration.build_settings["DEVELOPMENT_TEAM"] = "W7WQFW7K74"
-  configuration.build_settings["CURRENT_PROJECT_VERSION"] = "11"
+  configuration.build_settings["CURRENT_PROJECT_VERSION"] = "12"
   configuration.build_settings["MARKETING_VERSION"] = "1.0.0"
   configuration.build_settings["ASSETCATALOG_COMPILER_APPICON_NAME"] = "AppIcon"
 end
