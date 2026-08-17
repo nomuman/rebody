@@ -16,6 +16,8 @@
 - 未来シナリオのフォールバック表示
 - 記録画面
 - Firebase Authentication / Firestoreへの匿名同期
+- 招待コードでつながる仲間一覧、活動日数、連続日数
+- 友達のトレーニング完了通知（許可した場合のみ）
 - iPhone内のAIコーチ（Apple Foundation Models、利用できない端末は安全なローカル提案）
 
 ## Firebase設定
@@ -33,7 +35,6 @@ AIコーチは入力、生成、フォールバックのすべてをiPhone内で
 - Core MLによる本人写真の未来画像
 - Family Controls / Device Activity
 - Sign in with Apple
-- 仲間機能の実装
 - 実験イベントのリモート収集
 
 ## 安全に関する注意

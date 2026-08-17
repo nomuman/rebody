@@ -3,6 +3,7 @@ import FirebaseCore
 
 @main
 struct FutureBodyApp: App {
+    @UIApplicationDelegateAdaptor(FutureBodyAppDelegate.self) private var appDelegate
     @StateObject private var store: WorkoutStore
 
     init() {

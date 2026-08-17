@@ -99,8 +99,18 @@ final class FirebaseWorkoutSync {
             "planID": record.planID,
             "sessionType": record.sessionType.rawValue,
             "completedAt": Timestamp(date: record.completedAt),
+            "completedDate": Self.dateKey(for: record.completedAt),
             "durationMinutes": record.durationMinutes
         ], merge: true)
+    }
+
+    private static func dateKey(for date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: date)
     }
 
     private static func dailyState(from data: [String: Any]) -> DailyState? {

@@ -12,6 +12,41 @@ service cloud.firestore {
       match /coachUsage/{usageId} {
         allow read, delete: if request.auth != null && request.auth.uid == userId;
       }
+
+      match /friends/{friendId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow write: if false;
+      }
+
+      match /notificationTokens/{tokenId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow create, update: if request.auth != null
+          && request.auth.uid == userId
+          && request.resource.data.keys().hasOnly(["token", "updatedAt"])
+          && request.resource.data.token is string;
+        allow delete: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    match /publicProfiles/{userId} {
+      allow read: if request.auth != null && (
+        request.auth.uid == userId
+        || (
+          resource != null
+          && resource.data.sharingEnabled == true
+          && exists(/databases/$(database)/documents/users/$(request.auth.uid)/friends/$(userId))
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)/friends/$(userId)).data.status == "accepted"
+        )
+      );
+      allow write: if false;
+    }
+
+    match /friendInvites/{code} {
+      allow read, write: if false;
+    }
+
+    match /socialNotificationDeliveries/{deliveryId} {
+      allow read, write: if false;
     }
   }
 }

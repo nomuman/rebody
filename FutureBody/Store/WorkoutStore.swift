@@ -117,6 +117,7 @@ final class WorkoutStore: ObservableObject {
                 throw FirebaseSyncError.notConfigured
             }
 
+            try await FriendService().deleteSocialAccount()
             try await firebaseSync.deleteAccount()
         }
 

@@ -17,6 +17,13 @@ struct RootView: View {
                 Label("記録", systemImage: "chart.line.uptrend.xyaxis")
             }
 
+            NavigationStack {
+                TeamView()
+            }
+            .tabItem {
+                Label("仲間", systemImage: "person.2")
+            }
+
         }
     }
 }
